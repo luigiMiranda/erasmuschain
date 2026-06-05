@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ErasmusChain — University</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/shared/css/base.css?v=3" />
+  <link rel="stylesheet" href="/shared/css/theme.css?v=3" />
+  <link rel="stylesheet" href="/shared/css/components.css?v=3" />
+</head>
+<body>
+  <a href="#mainContent" class="sr-only">Vai al contenuto</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="brand-svg">
+              <path d="M4 9.2 12 4l8 5.2"></path>
+              <path d="M6 10v7h12v-7"></path>
+              <path d="M9 20h6"></path>
+              <path d="M10 13h4"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">ErasmusChain</div>
+            <div class="brand-subtitle">University Portal</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <a href="/landing/" class="btn btn-nav">Home</a>
+          <a href="/guide/" class="btn btn-nav">Guida</a>
+          <div class="topbar-badge">
+            <span class="dot success"></span>
+            <span>Verifica read only</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent" class="container main-grid page-compact">
+      <section class="intro-banner intro-banner-university">
+        <div class="intro-banner-copy">
+          <div class="hero-eyebrow">Area università</div>
+          <h1 class="intro-title">Cerca, apri e verifica i documenti registrati</h1>
+          <p class="intro-text">Consulta i documenti associati a un wallet studente e controlla se il CID risulta registrato sulla blockchain.</p>
+        </div>
+        <div class="intro-steps" aria-label="Passi università">
+          <div class="mini-step"><span>1</span><small>Cerca</small></div>
+          <div class="mini-step"><span>2</span><small>Apri</small></div>
+          <div class="mini-step"><span>3</span><small>Verifica</small></div>
+        </div>
+      </section>
+
+      <section class="section-stack-compact">
+        <div class="panel-grid panel-grid-two">
+          <div class="card card-elevated card-compact">
+            <div class="section-minihead">
+              <h2>Ricerca studente</h2>
+              <span class="badge badge-soft">A</span>
+            </div>
+            <form id="searchForm" class="form-grid">
+              <div class="form-group">
+                <label for="studentWallet" class="form-label">Wallet studente</label>
+                <input id="studentWallet" type="text" class="form-input" placeholder="0x..." required aria-required="true" />
+              </div>
+              <div class="actions compact-actions">
+                <button id="searchBtn" type="submit" class="btn btn-primary">Cerca documenti</button>
+              </div>
+            </form>
+          </div>
+          <div class="card card-elevated card-compact">
+            <div class="section-minihead">
+              <h2>Verifica CID</h2>
+              <span class="badge badge-soft">B</span>
+            </div>
+            <form id="verifyForm" class="form-grid">
+              <div class="form-group">
+                <label for="verifyWallet" class="form-label">Wallet studente</label>
+                <input id="verifyWallet" type="text" class="form-input" placeholder="0x..." required aria-required="true" />
+              </div>
+              <div class="form-group">
+                <label for="verifyCid" class="form-label">CID</label>
+                <input id="verifyCid" type="text" class="form-input" placeholder="bafy..." required aria-required="true" />
+              </div>
+              <div class="actions compact-actions">
+                <button id="verifyBtn" type="submit" class="btn btn-tonal">Verifica CID</button>
+              </div>
+            </form>
+            <div id="verifyResult" style="display:none; margin-top: var(--space-4);"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-stack-compact">
+        <div class="section-inline-header">
+          <div>
+            <h2 class="section-title-inline">Documenti trovati</h2>
+            <p class="section-subtle">Azioni rapide ma esplicite.</p>
+          </div>
+        </div>
+        <div id="documentsList" class="doc-grid compact-doc-grid">
+          <div class="empty-state compact-empty">
+            <div class="empty-state-icon">EC</div>
+            <div class="empty-state-title">Nessuna ricerca eseguita</div>
+            <div class="empty-state-text">Inserisci un wallet per visualizzare i documenti.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

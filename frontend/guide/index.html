@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ErasmusChain — Guida visuale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/shared/css/base.css?v=3" />
+  <link rel="stylesheet" href="/shared/css/theme.css?v=3" />
+  <link rel="stylesheet" href="/shared/css/components.css?v=3" />
+</head>
+<body>
+  <a href="#mainContent" class="sr-only">Vai al contenuto</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="brand-svg">
+              <path d="M6 7.5 12 4l6 3.5v5L12 16 6 12.5Z" fill="currentColor" opacity=".18"></path>
+              <path d="M6 7.5 12 4l6 3.5v5L12 16 6 12.5Z" stroke="currentColor" stroke-width="1.6" fill="none"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">ErasmusChain</div>
+            <div class="brand-subtitle">Guida visuale</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <a href="/landing/" class="btn btn-nav">Home</a>
+          <a href="/student/" class="btn btn-nav">Studente</a>
+          <a href="/university/" class="btn btn-nav">Università</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent" class="container main-grid page-compact">
+      <section class="guide-hero">
+        <div class="guide-hero-copy">
+          <div class="hero-eyebrow">Perché blockchain</div>
+          <h1 class="intro-title">Una prova digitale semplice da verificare</h1>
+          <p class="intro-text">La piattaforma usa IPFS per rendere il documento reperibile e blockchain per fissare una prova verificabile del CID, migliorando trasparenza, fiducia e resistenza alle manomissioni.</p>
+        </div>
+        <div class="guide-hero-orbit" aria-hidden="true">
+          <div class="orbit-center">CID</div>
+          <span class="orbit-node orbit-a">PDF</span>
+          <span class="orbit-node orbit-b">IPFS</span>
+          <span class="orbit-node orbit-c">Chain</span>
+        </div>
+      </section>
+
+      <section class="visual-flow-grid">
+        <article class="visual-card span-2">
+          <div class="visual-head">
+            <h2>Flusso studente</h2>
+            <span class="badge badge-soft">A</span>
+          </div>
+          <div class="flow-rail">
+            <div class="flow-stage">
+              <div class="flow-stage-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18"></path><path d="M5 8c0-2.8 3.1-5 7-5s7 2.2 7 5-3.1 5-7 5-7 2.2-7 5 3.1 5 7 5 7-2.2 7-5"></path></svg></div>
+              <strong>1. Wallet</strong>
+              <p>Lo studente si collega con MetaMask.</p>
+            </div>
+            <div class="flow-line"></div>
+            <div class="flow-stage">
+              <div class="flow-stage-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></div>
+              <strong>2. Upload</strong>
+              <p>Il PDF viene caricato e si ottiene un CID.</p>
+            </div>
+            <div class="flow-line"></div>
+            <div class="flow-stage">
+              <div class="flow-stage-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V6l-8-4Z"></path><path d="m9.5 12 1.8 1.8 3.2-3.6"></path></svg></div>
+              <strong>3. Registrazione</strong>
+              <p>Il CID viene scritto su Sepolia come prova digitale.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="visual-card span-2">
+          <div class="visual-head">
+            <h2>Flusso università</h2>
+            <span class="badge badge-soft">B</span>
+          </div>
+          <div class="flow-rail">
+            <div class="flow-stage compact-stage">
+              <div class="flow-stage-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></div>
+              <strong>Cerca</strong>
+              <p>Ricerca per wallet dello studente.</p>
+            </div>
+            <div class="flow-line"></div>
+            <div class="flow-stage compact-stage">
+              <div class="flow-stage-icon"><svg viewBox="0 0 24 24"><path d="M14 5h5v5"></path><path d="M10 14 19 5"></path><path d="M19 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"></path></svg></div>
+              <strong>Apri</strong>
+              <p>Apre il PDF da IPFS.</p>
+            </div>
+            <div class="flow-line"></div>
+            <div class="flow-stage compact-stage">
+              <div class="flow-stage-icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg></div>
+              <strong>Verifica</strong>
+              <p>Controlla che il CID sia registrato.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="visual-card">
+          <div class="visual-head">
+            <h2>Cosa garantisce</h2>
+            <span class="badge badge-soft">C</span>
+          </div>
+          <div class="guarantee-list">
+            <div class="guarantee-item"><span>01</span><p>Tracciabilità del documento.</p></div>
+            <div class="guarantee-item"><span>02</span><p>Controllo rapido dell’autenticità.</p></div>
+            <div class="guarantee-item"><span>03</span><p>Più fiducia tra studente e università.</p></div>
+          </div>
+        </article>
+
+        <article class="visual-card">
+          <div class="visual-head">
+            <h2>Perché è utile</h2>
+            <span class="badge badge-soft">D</span>
+          </div>
+          <div class="benefit-stack">
+            <div class="benefit-chip">Meno ambiguità</div>
+            <div class="benefit-chip">Verifica pubblica</div>
+            <div class="benefit-chip">Prova persistente</div>
+            <div class="benefit-chip">Flusso più ordinato</div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

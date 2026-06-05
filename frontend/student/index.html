@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ErasmusChain — Student</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/shared/css/base.css?v=3" />
+  <link rel="stylesheet" href="/shared/css/theme.css?v=3" />
+  <link rel="stylesheet" href="/shared/css/components.css?v=3" />
+</head>
+<body>
+  <a href="#mainContent" class="sr-only">Vai al contenuto</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="brand-svg">
+              <path d="M6 7.5 12 4l6 3.5v5L12 16 6 12.5Z" fill="currentColor" opacity=".18"></path>
+              <path d="M6 7.5 12 4l6 3.5v5L12 16 6 12.5Z" stroke="currentColor" stroke-width="1.6" fill="none"></path>
+              <path d="M9.2 9.8 12 11.4l2.8-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">ErasmusChain</div>
+            <div class="brand-subtitle">Student Portal</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <a href="/landing/" class="btn btn-nav">Home</a>
+          <a href="/guide/" class="btn btn-nav">Guida</a>
+          <div class="topbar-badge">
+            <span class="dot warning" id="topbarWalletDot"></span>
+            <span id="topbarWalletStatus">Wallet offline</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent" class="container main-grid page-compact">
+      <section class="intro-banner intro-banner-student">
+        <div class="intro-banner-copy">
+          <div class="hero-eyebrow">Area studente</div>
+          <h1 class="intro-title">Carica un PDF e certifica il documento</h1>
+          <p class="intro-text">Collega MetaMask, carica il file su IPFS e registra il CID su Sepolia per avere una prova digitale verificabile.</p>
+        </div>
+        <div class="intro-steps" aria-label="Passi studente">
+          <div class="mini-step"><span>1</span><small>Connetti</small></div>
+          <div class="mini-step"><span>2</span><small>Carica</small></div>
+          <div class="mini-step"><span>3</span><small>Registra</small></div>
+        </div>
+      </section>
+
+      <section class="section-stack-compact">
+        <div class="panel-grid panel-grid-two">
+          <div class="card card-elevated card-compact">
+            <div class="section-minihead">
+              <h2>Wallet</h2>
+              <span class="badge badge-soft">1</span>
+            </div>
+            <div class="status-inline compact-status">
+              <span class="dot warning" id="walletDot"></span>
+              <span id="walletStatus">Wallet non collegato</span>
+            </div>
+            <div id="walletConnected" style="display:none; margin-top: var(--space-4);">
+              <div class="inline-note success-note">Wallet collegato</div>
+            </div>
+            <div class="actions compact-actions">
+              <button id="connectBtn" class="btn btn-primary">Collega MetaMask</button>
+              <button id="copyWalletBtn" class="btn btn-icon-text" style="display:none;" aria-label="Copia indirizzo wallet">Copia account</button>
+            </div>
+          </div>
+
+          <div class="card card-elevated card-compact">
+            <div class="section-minihead">
+              <h2>Upload</h2>
+              <span class="badge badge-soft">2</span>
+            </div>
+            <form id="uploadForm" class="form-grid compact-form">
+              <div class="form-group">
+                <label for="documentType" class="form-label">Tipo documento</label>
+                <select id="documentType" class="form-input" required aria-required="true">
+                  <option value="">Seleziona</option>
+                  <option value="Transcript of Records">Transcript of Records</option>
+                  <option value="Learning Agreement">Learning Agreement</option>
+                  <option value="Certificate of Stay">Certificate of Stay</option>
+                  <option value="Other">Altro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="documentTitle" class="form-label">Nome documento</label>
+                <input id="documentTitle" type="text" class="form-input" maxlength="120" placeholder="Es. LA v2 firmato" required aria-required="true" />
+              </div>
+              <div class="form-group">
+                <label for="documentDescription" class="form-label">Nota</label>
+                <textarea id="documentDescription" class="form-input" rows="3" maxlength="400" placeholder="Es. Versione 2 corretta"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="pdfFile" class="form-label">PDF</label>
+                <input id="pdfFile" name="file" type="file" accept="application/pdf" class="form-input" required aria-required="true" />
+              </div>
+              <div class="actions compact-actions">
+                <button id="uploadBtn" type="button" class="btn btn-tonal" disabled>Carica su IPFS</button>
+              </div>
+            </form>
+            <div id="uploadResult" style="display:none; margin-top: var(--space-4);">
+              <div class="inline-note success-note">Upload completato</div>
+              <div class="actions compact-actions" style="margin-top: var(--space-3);">
+                <button id="copyCidBtn" class="btn btn-icon-text" type="button" aria-label="Copia CID">Copia CID</button>
+                <a id="cidLink" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Apri documento</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-elevated card-compact">
+          <div class="section-minihead">
+            <h2>Blockchain</h2>
+            <span class="badge badge-soft">3</span>
+          </div>
+          <div class="actions compact-actions">
+            <button id="registerBtn" class="btn btn-primary" disabled>Registra su Sepolia</button>
+          </div>
+          <div id="registerResult" style="display:none; margin-top: var(--space-4);"></div>
+        </div>
+      </section>
+
+      <section class="section-stack-compact">
+        <div class="section-inline-header">
+          <div>
+            <h2 class="section-title-inline">I tuoi documenti</h2>
+            <p class="section-subtle">Schede compatte con azioni chiare.</p>
+          </div>
+          <button id="refreshDocsBtn" class="btn btn-secondary">Aggiorna</button>
+        </div>
+        <div id="documentsList" class="doc-grid compact-doc-grid">
+          <div class="empty-state compact-empty">
+            <div class="empty-state-icon">EC</div>
+            <div class="empty-state-title">Nessun documento</div>
+            <div class="empty-state-text">Dopo la prima registrazione comparirà qui.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

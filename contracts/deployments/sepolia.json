@@ -1,0 +1,9 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "contractAddress": "0x19Cf1D99798d7Da8b23f8a79db8f65DAF4737F5C",
+  "contractName": "ErasmusChain",
+  "deployedAt": null,
+  "deployer": null,
+  "note": "Aggiorna CONTRACT_ADDRESS in .env e config.js dopo il deploy."
+}
