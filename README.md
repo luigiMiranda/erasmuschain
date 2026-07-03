@@ -9,10 +9,9 @@ Lo studente carica un PDF → viene salvato su IPFS (Pinata) → il CID viene re
 
 - **Pagina studente separata**: upload PDF, MetaMask, registrazione on-chain.
 - **Pagina università separata**: sola lettura, ricerca tramite wallet studente, verifica CID, apertura/download da IPFS.
-- **Backend sicuro**: upload verso Pinata solo lato backend, nessun segreto nel frontend.
+- **Backend sicuro**: upload verso Pinata solo lato backend, nessuna API KEY o JWT token nel frontend.
 - **Smart contract su Sepolia**: registrazione document, getMyDocuments, getStudentDocuments(address), verifyDocument(address, cid).
 - **Docker Compose**: tutto parte con un solo comando.
-- **UI chiara e user-friendly**: testi semplici, interfaccia pulita, comprensibile anche da non tecnici.
 
 ---
 
@@ -23,7 +22,7 @@ Lo studente carica un PDF → viene salvato su IPFS (Pinata) → il CID viene re
 - Un account **Pinata** (per IPFS).
 - Un wallet di test con **ETH Sepolia** (per testare il contratto).
 
-> Se non hai ETH Sepolia, usa un faucet: [https://sepoliafaucet.com](https://sepoliafaucet.com)
+> Se non hai ETH Sepolia, usa un faucet per caricare ETH sul tuo wallet: [https://sepoliafaucet.com](https://sepoliafaucet.com)
 
 ---
 
@@ -51,6 +50,7 @@ Lo studente carica un PDF → viene salvato su IPFS (Pinata) → il CID viene re
 5. **Apri nel browser**
    - Studente: `http://localhost/student`
    - Università: `http://localhost/university`
+   - Università: `http://localhost/landing`
 
 ---
 
@@ -111,11 +111,10 @@ Segui la guida in `contracts/README.md` per:
 
 ## Sicurezza
 
-- **Nessun segreto nel frontend**: le chiavi Pinata sono solo nel backend, tramite `PINATA_JWT` in `.env`.
+- **Nessun dato sensibile nel frontend**: le chiavi Pinata sono solo nel backend, tramite `PINATA_JWT` in `.env`.
 - **Backend come proxy sicuro**: il frontend non comunica direttamente con Pinata.
 - **`.env` escluso dal versionamento**: il repository include solo `.env.example`.
-- **Errori gestiti senza esporre segreti**: il backend restituisce messaggi generici, non stack trace.
-- **Università in sola lettura**: non usa MetaMask, solo un provider RPC pubblico.
+- **Errori gestiti senza esporre KEYS o TOKEN**: il backend restituisce messaggi generici, non stack trace.
 
 > Il progetto è stato progettato per proteggere le chiavi e ridurre l'esposizione dei dati sensibili.
 
