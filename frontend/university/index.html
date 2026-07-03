@@ -10,6 +10,57 @@
   <link rel="stylesheet" href="/shared/css/base.css?v=3" />
   <link rel="stylesheet" href="/shared/css/theme.css?v=3" />
   <link rel="stylesheet" href="/shared/css/components.css?v=3" />
+  
+  <!-- CSS Aggiuntivo per l'area Drag & Drop -->
+  <style>
+    .form-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: var(--space-4) 0;
+    }
+    .form-divider::before, .form-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--stroke-default);
+    }
+    .form-divider-text {
+      padding: 0 10px;
+      color: var(--on-surface-de-emphasis);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .drop-zone {
+      border: 2px dashed var(--stroke-default);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: var(--surface-container-lowest);
+      margin-top: 8px;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--primary);
+      background-color: var(--primary-container);
+    }
+    .drop-zone-icon {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .drop-zone-text {
+      margin: 0;
+      font-size: 14px;
+      color: var(--on-surface-default);
+    }
+    .drop-zone-text small {
+      color: var(--on-surface-de-emphasis);
+      display: block;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
   <a href="#mainContent" class="sr-only">Vai al contenuto</a>
@@ -57,6 +108,8 @@
 
       <section class="section-stack-compact">
         <div class="panel-grid panel-grid-two">
+          
+          <!-- SEZIONE A: RICERCA -->
           <div class="card card-elevated card-compact">
             <div class="section-minihead">
               <h2>Ricerca studente</h2>
@@ -72,6 +125,8 @@
               </div>
             </form>
           </div>
+          
+          <!-- SEZIONE B: VERIFICA CON DRAG & DROP -->
           <div class="card card-elevated card-compact">
             <div class="section-minihead">
               <h2>Verifica CID</h2>
@@ -82,12 +137,36 @@
                 <label for="verifyWallet" class="form-label">Wallet studente</label>
                 <input id="verifyWallet" type="text" class="form-input" placeholder="0x..." required aria-required="true" />
               </div>
+              
               <div class="form-group">
-                <label for="verifyCid" class="form-label">CID</label>
-                <input id="verifyCid" type="text" class="form-input" placeholder="bafy..." required aria-required="true" />
+                <label for="verifyCid" class="form-label">CID (Manuale o Calcolato)</label>
+                <input id="verifyCid" type="text" class="form-input" placeholder="Qm..." required aria-required="true" />
               </div>
+
+              <!-- Inizio Elementi Drag & Drop -->
+              <div class="form-divider">
+                <span class="form-divider-text">Oppure verifica dal file</span>
+              </div>
+
+              <div class="form-group">
+                <div id="dropZone" class="drop-zone">
+                  <div class="drop-zone-icon">
+                    <!-- Icona Documento -->
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="12" y1="18" x2="12" y2="12"></line>
+                      <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                  </div>
+                  <p class="drop-zone-text">Trascina qui il documento PDF<br><small>o clicca per selezionarlo dal PC</small></p>
+                  <input type="file" id="fileInput" accept="application/pdf" style="display: none;" />
+                </div>
+              </div>
+              <!-- Fine Elementi Drag & Drop -->
+
               <div class="actions compact-actions">
-                <button id="verifyBtn" type="submit" class="btn btn-tonal">Verifica CID</button>
+                <button id="verifyBtn" type="submit" class="btn btn-tonal">Verifica su Blockchain</button>
               </div>
             </form>
             <div id="verifyResult" style="display:none; margin-top: var(--space-4);"></div>

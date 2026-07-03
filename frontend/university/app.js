@@ -6,6 +6,10 @@ import {
 } from '../shared/js/contract.js';
 import { buildIpfsUrl } from '../shared/js/ipfs.js';
 
+// --- NUOVA IMPORTAZIONE PER IL CALCOLO DELL'HASH OFFLINE ---
+// Usiamo il CDN esm.sh per caricare la libreria direttamente nel browser
+import { of as calculateHash } from 'https://esm.sh/ipfs-only-hash@4.0.0';
+
 const provider = createReadOnlyProvider();
 const contractReadOnly = createReadOnlyContract(provider);
 
@@ -13,11 +17,16 @@ const searchForm = document.getElementById('searchForm');
 const studentWalletInput = document.getElementById('studentWallet');
 const searchBtn = document.getElementById('searchBtn');
 const documentsList = document.getElementById('documentsList');
+
 const verifyForm = document.getElementById('verifyForm');
 const verifyWalletInput = document.getElementById('verifyWallet');
 const verifyCidInput = document.getElementById('verifyCid');
 const verifyBtn = document.getElementById('verifyBtn');
 const verifyResult = document.getElementById('verifyResult');
+
+// --- ELEMENTI DOM PER IL DRAG E DROP ---
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
 
 const DOCUMENT_TYPE_META = {
   'Transcript of Records': { short: 'TOR', labelClass: 'doc-tag doc-tag-blue' },
@@ -25,6 +34,83 @@ const DOCUMENT_TYPE_META = {
   'Certificate of Stay': { short: 'COS', labelClass: 'doc-tag doc-tag-orange' },
   Other: { short: 'ALTRO', labelClass: 'doc-tag doc-tag-purple' },
 };
+
+// ==========================================
+// LOGICA DRAG & DROP E CALCOLO CID OFFLINE
+// ==========================================
+
+// Apre la finestra di selezione file se l'utente clicca nel riquadro
+dropZone.addEventListener('click', () => fileInput.click());
+
+// Cambia l'aspetto grafico quando si trascina il file sopra
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+
+// Ripristina l'aspetto quando il file esce dall'area
+dropZone.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+});
+
+// Cattura il file quando viene "lasciato" (dropped)
+dropZone.addEventListener('drop', async (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  
+  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    await processLocalFile(e.dataTransfer.files[0]);
+  }
+});
+
+// Cattura il file se viene selezionato tramite la classica finestra di Windows/Mac
+fileInput.addEventListener('change', async (e) => {
+  if (e.target.files && e.target.files.length > 0) {
+    await processLocalFile(e.target.files[0]);
+  }
+});
+
+// FUNZIONE PRINCIPALE: Genera l'hash senza connessione internet
+async function processLocalFile(file) {
+  if (file.type !== 'application/pdf') {
+    alert('Attenzione: seleziona un documento in formato PDF.');
+    return;
+  }
+  
+  verifyCidInput.value = 'Calcolo in corso...';
+  verifyResult.style.display = 'none';
+  
+  try {
+    // Trasforma il PDF in ByteArray (formato leggibile dalla matematica crittografica)
+    const arrayBuffer = await file.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+    
+    // Genera il CID ESATTO che genererebbe IPFS/Pinata
+    const cid = await calculateHash(uint8Array);
+    
+    // Inserisce il CID nel campo di testo
+    verifyCidInput.value = cid;
+    
+    // Verifica intelligente: se l'indirizzo wallet è già stato inserito in alto, 
+    // fai partire automaticamente il check sulla blockchain!
+    if (isValidAddress(verifyWalletInput.value.trim())) {
+       verifyBtn.click();
+    } else {
+       // Se manca il wallet, avvisa l'utente
+       verifyResult.style.display = 'block';
+       verifyResult.innerHTML = '<div class="inline-note success-note">Hash calcolato correttamente! Inserisci il wallet dello studente in alto per completare la verifica.</div>';
+    }
+  } catch (error) {
+    verifyCidInput.value = '';
+    verifyResult.style.display = 'block';
+    verifyResult.innerHTML = `<div class="inline-note error-note">Errore nel calcolo del CID: ${escapeHtml(error.message)}</div>`;
+  }
+}
+
+// ==========================================
+// RESTO DEL TUO CODICE ORIGINALE INVARIATO
+// ==========================================
 
 searchForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -63,20 +149,20 @@ verifyForm.addEventListener('submit', async (e) => {
   }
 
   verifyBtn.disabled = true;
-  verifyBtn.textContent = 'Verifica...';
+  verifyBtn.textContent = 'Verifica in corso...';
   verifyResult.style.display = 'block';
   verifyResult.innerHTML = '<div class="loading">Verifica in corso...</div>';
 
   try {
     const isValid = await verifyDocumentReadOnly(contractReadOnly, studentAddress, cid);
     verifyResult.innerHTML = isValid
-      ? '<div class="inline-note success-note">CID autentico</div>'
-      : '<div class="inline-note error-note">CID non autentico</div>';
+      ? '<div class="inline-note success-note"><b>DOCUMENTO AUTENTICO</b><br>L\'impronta crittografica corrisponde ai registri della Blockchain.</div>'
+      : '<div class="inline-note error-note"><b>DOCUMENTO MANOMESSO O NON TROVATO</b><br>L\'impronta di questo file non risulta registrata per questo studente.</div>';
   } catch (err) {
     verifyResult.innerHTML = `<div class="inline-note error-note">${escapeHtml(err.message)}</div>`;
   } finally {
     verifyBtn.disabled = false;
-    verifyBtn.textContent = 'Verifica CID';
+    verifyBtn.textContent = 'Verifica su Blockchain';
   }
 });
 
